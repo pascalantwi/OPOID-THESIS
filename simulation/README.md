@@ -1,6 +1,6 @@
 # Pilot simulations
 
-Small first simulations for the two thesis directions. They are **pilots**: balanced designs, intercept-only means and modest numbers of replications. They show what the full simulation chapters would study and what the first results look like. They are not final results.
+Simulations for the two thesis directions. They are **pilots**: balanced designs, intercept-only means and modest numbers of replications. They show what the full simulation chapters would study and what the first results look like. They are not final results.
 
 Run with Python 3 (numpy, scipy, matplotlib):
 
@@ -12,6 +12,61 @@ python3 plot_your_design.py
 python3 d3_change_points.py   # Direction 2 -> results/d3_change_points.csv
 python3 make_figures.py       # figures/*.png
 ```
+
+## Start here: main results (staged study)
+
+`staged_study.py` follows the thesis plan step by step on a design shaped like the ARCOS data: **7 regions, 67 counties (unequal numbers per region), 1,483 ZIP codes (unequal numbers per county), 60 months**, with 1,000 simulated data sets per scenario. Every data set is fitted under every possible level structure by exact maximum likelihood (checked against the closed forms of the balanced case), and each method picks one.
+
+- **Stage 1: 2 levels** (months within ZIP): the setting where a BIC already exists.
+- **Stage 2: 3 levels** (months within ZIP within county).
+- **Stage 3: 4 levels** (months within ZIP within county within region).
+
+Methods: AIC; standard BIC (k log N, the R default); BIC with the number of top-level clusters (SAS style); backward likelihood-ratio tests with the boundary correction at 5%; the new exact-information BIC; and "2-level analysis only" (ignore county and region).
+
+![Accuracy at each stage](figures/staged_accuracy.png)
+
+**Percentage of data sets in which the right structure was chosen**
+
+| Stage | True world | AIC | Standard BIC | LR tests | New BIC | BIC (top clusters) | 2-level only |
+|---|---|---|---|---|---|---|---|
+| Stage 1: 2 levels | No ZIP effect | 92.7 | 100.0 | 94.9 | 100.0 | 0.0 | – |
+|  | Small ZIP effect | 100.0 | 99.0 | 100.0 | 96.9 | 100.0 | – |
+|  | Medium ZIP effect | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | – |
+| Stage 2: 3 levels | ZIP only (no county) | 93.3 | 100.0 | 95.9 | 100.0 | 0.0 | 100.0 |
+|  | Small county effect | 65.4 | 11.3 | 58.0 | 16.6 | 100.0 | 0.0 |
+|  | Medium county effect | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 0.0 |
+| Stage 3: 4 levels | No region effect | 96.4 | 100.0 | 97.8 | 99.5 | 0.0 | 0.0 |
+|  | Small region effect | 42.1 | 4.4 | 36.3 | 21.7 | 100.0 | 0.0 |
+|  | Medium region effect | 94.8 | 70.6 | 93.4 | 87.6 | 100.0 | 0.0 |
+|  | Large region effect | 99.8 | 97.3 | 99.7 | 99.4 | 100.0 | 0.0 |
+|  | Region but no county | 93.3 | 99.8 | 95.8 | 99.8 | 93.2 | 0.0 |
+
+![Which method is performing](figures/staged_tradeoff.png)
+
+**Overall performance** (adds a false level: averaged over scenarios where some level is absent; misses a real level: averaged over scenarios where some level is real)
+
+| Method | Average % correct | Adds a false level (%) | Misses a real level (%) |
+|---|---|---|---|
+| AIC | 88.9 | 6.0 | 9.8 |
+| Standard BIC (N) | 80.2 | 0.0 | 21.8 |
+| Likelihood ratio tests | 88.3 | 3.9 | 11.3 |
+| New BIC (exact information) | 83.8 | 0.1 | 17.8 |
+| BIC (top clusters) | 72.1 | 76.7 | 0.0 |
+| 2-level analysis only | 12.5 | 0.0 | 87.5 |
+
+**What the results say**
+
+1. **Two levels are easy with 1,483 ZIP codes.** Every sensible method gets almost every data set right. This matches the fact that the 2-level problem is already solved.
+2. **The difficulty is at the top of the hierarchy.** With only 7 regions (or a small county effect), real effects are often missed. Standard BIC finds a small region effect in only 4% of data sets and a medium one in 71%.
+3. **The new BIC is a clear improvement on standard BIC** at the same, almost zero, rate of false levels: small region effect 22% vs 4%, medium region effect 88% vs 71%, small county effect 17% vs 11%.
+4. **Likelihood-ratio tests and AIC find real effects most often**, but they add a level that does not exist about 4% and 6% of the time. The BICs almost never do. This is a trade-off between missing real levels and inventing false ones, not a single winner.
+5. **Two approaches clearly fail.** BIC with top-level clusters adds a false level in most data sets, and a 2-level analysis cannot detect county or region effects at all.
+
+**What this means for the thesis.** The new BIC improves on the standard BIC used by most software precisely where the ARCOS data are weakest: few units at the top level. The thesis would derive it properly, explain the trade-off with likelihood-ratio tests and AIC, and apply it to the real data. These are pilot results: intercept-only models, assumed variance sizes, 60 assumed months, and synthetic group sizes with the real totals.
+
+Run it with: `OMP_NUM_THREADS=1 REPS=1000 python3 staged_study.py && python3 plot_staged.py`
+
+## Earlier pilot runs
 
 ## Direction 1: selecting levels with BIC
 

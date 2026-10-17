@@ -1,0 +1,64 @@
+stage,scenario,true_structure,method,pct_correct,pct_added_false_level,pct_missed_real_level
+Stage 1: 2 levels,No ZIP effect,none,AIC,92.7,7.3,0.0
+Stage 1: 2 levels,No ZIP effect,none,Standard BIC (N),100.0,0.0,0.0
+Stage 1: 2 levels,No ZIP effect,none,BIC (top clusters),0.0,100.0,0.0
+Stage 1: 2 levels,No ZIP effect,none,New BIC (exact information),100.0,0.0,0.0
+Stage 1: 2 levels,No ZIP effect,none,Likelihood ratio tests,94.9,5.1,0.0
+Stage 1: 2 levels,Small ZIP effect,ZIP,AIC,100.0,0.0,0.0
+Stage 1: 2 levels,Small ZIP effect,ZIP,Standard BIC (N),99.0,0.0,1.0
+Stage 1: 2 levels,Small ZIP effect,ZIP,BIC (top clusters),100.0,0.0,0.0
+Stage 1: 2 levels,Small ZIP effect,ZIP,New BIC (exact information),96.9,0.0,3.1
+Stage 1: 2 levels,Small ZIP effect,ZIP,Likelihood ratio tests,100.0,0.0,0.0
+Stage 1: 2 levels,Medium ZIP effect,ZIP,AIC,100.0,0.0,0.0
+Stage 1: 2 levels,Medium ZIP effect,ZIP,Standard BIC (N),100.0,0.0,0.0
+Stage 1: 2 levels,Medium ZIP effect,ZIP,BIC (top clusters),100.0,0.0,0.0
+Stage 1: 2 levels,Medium ZIP effect,ZIP,New BIC (exact information),100.0,0.0,0.0
+Stage 1: 2 levels,Medium ZIP effect,ZIP,Likelihood ratio tests,100.0,0.0,0.0
+Stage 2: 3 levels,ZIP only (no county),ZIP,AIC,93.3,6.7,0.0
+Stage 2: 3 levels,ZIP only (no county),ZIP,Standard BIC (N),100.0,0.0,0.0
+Stage 2: 3 levels,ZIP only (no county),ZIP,BIC (top clusters),0.0,100.0,0.0
+Stage 2: 3 levels,ZIP only (no county),ZIP,New BIC (exact information),100.0,0.0,0.0
+Stage 2: 3 levels,ZIP only (no county),ZIP,Likelihood ratio tests,95.9,4.1,0.0
+Stage 2: 3 levels,ZIP only (no county),ZIP,2-level analysis only,100.0,0.0,0.0
+Stage 2: 3 levels,Small county effect,ZIP + county,AIC,65.4,0.0,34.6
+Stage 2: 3 levels,Small county effect,ZIP + county,Standard BIC (N),11.3,0.0,88.7
+Stage 2: 3 levels,Small county effect,ZIP + county,BIC (top clusters),100.0,0.0,0.0
+Stage 2: 3 levels,Small county effect,ZIP + county,New BIC (exact information),16.6,0.0,83.4
+Stage 2: 3 levels,Small county effect,ZIP + county,Likelihood ratio tests,58.0,0.0,42.0
+Stage 2: 3 levels,Small county effect,ZIP + county,2-level analysis only,0.0,0.0,100.0
+Stage 2: 3 levels,Medium county effect,ZIP + county,AIC,100.0,0.0,0.0
+Stage 2: 3 levels,Medium county effect,ZIP + county,Standard BIC (N),100.0,0.0,0.0
+Stage 2: 3 levels,Medium county effect,ZIP + county,BIC (top clusters),100.0,0.0,0.0
+Stage 2: 3 levels,Medium county effect,ZIP + county,New BIC (exact information),100.0,0.0,0.0
+Stage 2: 3 levels,Medium county effect,ZIP + county,Likelihood ratio tests,100.0,0.0,0.0
+Stage 2: 3 levels,Medium county effect,ZIP + county,2-level analysis only,0.0,0.0,100.0
+Stage 3: 4 levels,No region effect,ZIP + county,AIC,96.4,3.6,0.0
+Stage 3: 4 levels,No region effect,ZIP + county,Standard BIC (N),100.0,0.0,0.0
+Stage 3: 4 levels,No region effect,ZIP + county,BIC (top clusters),0.0,100.0,0.0
+Stage 3: 4 levels,No region effect,ZIP + county,New BIC (exact information),99.5,0.5,0.0
+Stage 3: 4 levels,No region effect,ZIP + county,Likelihood ratio tests,97.8,2.2,0.0
+Stage 3: 4 levels,No region effect,ZIP + county,2-level analysis only,0.0,0.0,100.0
+Stage 3: 4 levels,Small region effect,ZIP + county + region,AIC,42.1,0.0,57.9
+Stage 3: 4 levels,Small region effect,ZIP + county + region,Standard BIC (N),4.4,0.0,95.6
+Stage 3: 4 levels,Small region effect,ZIP + county + region,BIC (top clusters),100.0,0.0,0.0
+Stage 3: 4 levels,Small region effect,ZIP + county + region,New BIC (exact information),21.7,0.0,78.3
+Stage 3: 4 levels,Small region effect,ZIP + county + region,Likelihood ratio tests,36.3,0.0,63.7
+Stage 3: 4 levels,Small region effect,ZIP + county + region,2-level analysis only,0.0,0.0,100.0
+Stage 3: 4 levels,Medium region effect,ZIP + county + region,AIC,94.8,0.0,5.2
+Stage 3: 4 levels,Medium region effect,ZIP + county + region,Standard BIC (N),70.6,0.0,29.4
+Stage 3: 4 levels,Medium region effect,ZIP + county + region,BIC (top clusters),100.0,0.0,0.0
+Stage 3: 4 levels,Medium region effect,ZIP + county + region,New BIC (exact information),87.6,0.0,12.4
+Stage 3: 4 levels,Medium region effect,ZIP + county + region,Likelihood ratio tests,93.4,0.0,6.6
+Stage 3: 4 levels,Medium region effect,ZIP + county + region,2-level analysis only,0.0,0.0,100.0
+Stage 3: 4 levels,Large region effect,ZIP + county + region,AIC,99.8,0.0,0.2
+Stage 3: 4 levels,Large region effect,ZIP + county + region,Standard BIC (N),97.3,0.0,2.7
+Stage 3: 4 levels,Large region effect,ZIP + county + region,BIC (top clusters),100.0,0.0,0.0
+Stage 3: 4 levels,Large region effect,ZIP + county + region,New BIC (exact information),99.4,0.0,0.6
+Stage 3: 4 levels,Large region effect,ZIP + county + region,Likelihood ratio tests,99.7,0.0,0.3
+Stage 3: 4 levels,Large region effect,ZIP + county + region,2-level analysis only,0.0,0.0,100.0
+Stage 3: 4 levels,Region but no county,ZIP + region,AIC,93.3,6.6,0.1
+Stage 3: 4 levels,Region but no county,ZIP + region,Standard BIC (N),99.8,0.0,0.2
+Stage 3: 4 levels,Region but no county,ZIP + region,BIC (top clusters),93.2,6.8,0.0
+Stage 3: 4 levels,Region but no county,ZIP + region,New BIC (exact information),99.8,0.0,0.2
+Stage 3: 4 levels,Region but no county,ZIP + region,Likelihood ratio tests,95.8,4.1,0.1
+Stage 3: 4 levels,Region but no county,ZIP + region,2-level analysis only,0.0,0.0,100.0
