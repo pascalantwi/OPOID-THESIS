@@ -1,0 +1,46 @@
+scenario,counties,true_model,criterion,pct_correct
+A: county and ZIP real,5,M3,AIC,79.1
+A: county and ZIP real,5,M3,BIC (N),53.3
+A: county and ZIP real,5,M3,BIC (top clusters),100.0
+A: county and ZIP real,5,M3,BIC (level-specific),100.0
+A: county and ZIP real,5,M3,BIC (exact information),69.4
+A: county and ZIP real,10,M3,AIC,96.5
+A: county and ZIP real,10,M3,BIC (N),84.7
+A: county and ZIP real,10,M3,BIC (top clusters),100.0
+A: county and ZIP real,10,M3,BIC (level-specific),99.6
+A: county and ZIP real,10,M3,BIC (exact information),90.8
+A: county and ZIP real,30,M3,AIC,100.0
+A: county and ZIP real,30,M3,BIC (N),100.0
+A: county and ZIP real,30,M3,BIC (top clusters),100.0
+A: county and ZIP real,30,M3,BIC (level-specific),100.0
+A: county and ZIP real,30,M3,BIC (exact information),100.0
+B: no county effect,5,MZ,AIC,96.1
+B: no county effect,5,MZ,BIC (N),99.9
+B: no county effect,5,MZ,BIC (top clusters),0.0
+B: no county effect,5,MZ,BIC (level-specific),0.0
+B: no county effect,5,MZ,BIC (exact information),99.2
+B: no county effect,10,MZ,AIC,96.2
+B: no county effect,10,MZ,BIC (N),99.9
+B: no county effect,10,MZ,BIC (top clusters),0.0
+B: no county effect,10,MZ,BIC (level-specific),61.6
+B: no county effect,10,MZ,BIC (exact information),99.1
+B: no county effect,30,MZ,AIC,94.8
+B: no county effect,30,MZ,BIC (N),99.9
+B: no county effect,30,MZ,BIC (top clusters),0.0
+B: no county effect,30,MZ,BIC (level-specific),88.9
+B: no county effect,30,MZ,BIC (exact information),99.9
+C: weak county effect,5,M3,AIC,21.4
+C: weak county effect,5,M3,BIC (N),3.6
+C: weak county effect,5,M3,BIC (top clusters),100.0
+C: weak county effect,5,M3,BIC (level-specific),100.0
+C: weak county effect,5,M3,BIC (exact information),8.9
+C: weak county effect,10,M3,AIC,41.0
+C: weak county effect,10,M3,BIC (N),8.7
+C: weak county effect,10,M3,BIC (top clusters),100.0
+C: weak county effect,10,M3,BIC (level-specific),82.6
+C: weak county effect,10,M3,BIC (exact information),17.7
+C: weak county effect,30,M3,AIC,81.4
+C: weak county effect,30,M3,BIC (N),31.1
+C: weak county effect,30,M3,BIC (top clusters),100.0
+C: weak county effect,30,M3,BIC (level-specific),88.3
+C: weak county effect,30,M3,BIC (exact information),44.1
