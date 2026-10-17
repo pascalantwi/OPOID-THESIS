@@ -1,0 +1,61 @@
+truth,regions,criterion,pct_correct
+Depth 2: ZIP only,4,AIC,91.9
+Depth 2: ZIP only,4,BIC (N),99.8
+Depth 2: ZIP only,4,BIC (top clusters),0.0
+Depth 2: ZIP only,4,BIC (level-specific),0.0
+Depth 2: ZIP only,4,BIC (exact information),98.9
+Depth 2: ZIP only,8,AIC,92.1
+Depth 2: ZIP only,8,BIC (N),99.9
+Depth 2: ZIP only,8,BIC (top clusters),0.0
+Depth 2: ZIP only,8,BIC (level-specific),0.0
+Depth 2: ZIP only,8,BIC (exact information),99.7
+Depth 2: ZIP only,15,AIC,90.6
+Depth 2: ZIP only,15,BIC (N),99.9
+Depth 2: ZIP only,15,BIC (top clusters),0.0
+Depth 2: ZIP only,15,BIC (level-specific),0.0
+Depth 2: ZIP only,15,BIC (exact information),99.9
+Depth 3: ZIP + county,4,AIC,94.7
+Depth 3: ZIP + county,4,BIC (N),82.1
+Depth 3: ZIP + county,4,BIC (top clusters),0.0
+Depth 3: ZIP + county,4,BIC (level-specific),0.0
+Depth 3: ZIP + county,4,BIC (exact information),91.7
+Depth 3: ZIP + county,8,AIC,95.3
+Depth 3: ZIP + county,8,BIC (N),98.6
+Depth 3: ZIP + county,8,BIC (top clusters),0.0
+Depth 3: ZIP + county,8,BIC (level-specific),85.5
+Depth 3: ZIP + county,8,BIC (exact information),98.6
+Depth 3: ZIP + county,15,AIC,94.6
+Depth 3: ZIP + county,15,BIC (N),100.0
+Depth 3: ZIP + county,15,BIC (top clusters),0.0
+Depth 3: ZIP + county,15,BIC (level-specific),89.3
+Depth 3: ZIP + county,15,BIC (exact information),99.1
+Depth 4: ZIP + county + region,4,AIC,47.2
+Depth 4: ZIP + county + region,4,BIC (N),9.0
+Depth 4: ZIP + county + region,4,BIC (top clusters),97.8
+Depth 4: ZIP + county + region,4,BIC (level-specific),94.5
+Depth 4: ZIP + county + region,4,BIC (exact information),33.7
+Depth 4: ZIP + county + region,8,AIC,80.7
+Depth 4: ZIP + county + region,8,BIC (N),39.4
+Depth 4: ZIP + county + region,8,BIC (top clusters),99.7
+Depth 4: ZIP + county + region,8,BIC (level-specific),90.2
+Depth 4: ZIP + county + region,8,BIC (exact information),66.7
+Depth 4: ZIP + county + region,15,AIC,96.8
+Depth 4: ZIP + county + region,15,BIC (N),74.5
+Depth 4: ZIP + county + region,15,BIC (top clusters),100.0
+Depth 4: ZIP + county + region,15,BIC (level-specific),97.8
+Depth 4: ZIP + county + region,15,BIC (exact information),90.5
+"Depth 4, middle missing: ZIP + region",4,AIC,83.0
+"Depth 4, middle missing: ZIP + region",4,BIC (N),74.2
+"Depth 4, middle missing: ZIP + region",4,BIC (top clusters),91.3
+"Depth 4, middle missing: ZIP + region",4,BIC (level-specific),97.4
+"Depth 4, middle missing: ZIP + region",4,BIC (exact information),80.9
+"Depth 4, middle missing: ZIP + region",8,AIC,95.0
+"Depth 4, middle missing: ZIP + region",8,BIC (N),95.3
+"Depth 4, middle missing: ZIP + region",8,BIC (top clusters),95.8
+"Depth 4, middle missing: ZIP + region",8,BIC (level-specific),98.2
+"Depth 4, middle missing: ZIP + region",8,BIC (exact information),97.2
+"Depth 4, middle missing: ZIP + region",15,AIC,91.9
+"Depth 4, middle missing: ZIP + region",15,BIC (N),99.9
+"Depth 4, middle missing: ZIP + region",15,BIC (top clusters),94.5
+"Depth 4, middle missing: ZIP + region",15,BIC (level-specific),98.3
+"Depth 4, middle missing: ZIP + region",15,BIC (exact information),99.7

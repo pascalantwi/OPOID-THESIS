@@ -5,7 +5,8 @@ Small first simulations for the two thesis directions. They are **pilots**: bala
 Run with Python 3 (numpy, scipy, matplotlib):
 
 ```
-python3 d1_bic_levels.py      # Direction 1 -> results/d1_selection.csv
+python3 d1_bic_levels.py      # Direction 1, three levels -> results/d1_selection.csv
+python3 d1_depth_4level.py    # Direction 1, depths 2-4   -> results/d1_depth_4level.csv
 python3 d3_change_points.py   # Direction 2 -> results/d3_change_points.csv
 python3 make_figures.py       # figures/*.png
 ```
@@ -38,6 +39,36 @@ python3 make_figures.py       # figures/*.png
 2. **The leading-order level-specific penalty (equation 4) fails when a level is absent.** With fewer counties than ZIP codes per county, adding the county level moves the intercept's penalty from log(#ZIPs) down to log(#counties). The larger model then has a *smaller* penalty and is always chosen, so the criterion never detects a missing county level (0% in scenario B with 5 counties). BIC with top-level clusters fails for the same reason. Equation 4 was derived assuming every variance component is positive. **The derivation therefore has to treat the boundary case (a variance equal to zero) explicitly**, which is the central theoretical task of Direction 1.
 3. **Using the exact information instead of leading-order log n terms repairs this.** That criterion keeps false county levels out (99% correct in scenario B) and finds real county levels more often than BIC with total N (69% vs 53% with 5 counties; 91% vs 85% with 10).
 4. **No criterion detects a weak county effect with few counties.** This trade-off between power and false inclusion is what the full simulation chapter would map.
+
+## Direction 1 with two, three and four levels
+
+**Design.** Months (T = 24) within ZIP codes (5 per county) within counties (5 per region) within R = 4, 8 or 15 regions; variances: residual 1, ZIP 0.5, county 0.3, region 0.3; 1,000 data sets per condition. The true structure has depth 2 (ZIP only), 3 (ZIP + county), 4 (ZIP + county + region), or 4 with the middle level missing (ZIP + region). All 8 candidate structures are fitted by exact ML (checked against a numerical optimiser) and the same five criteria choose among them.
+
+![Direction 1, depths 2-4](figures/d1_depth_4level.png)
+
+**Percentage of data sets in which the true structure was selected**
+
+| True structure | Regions | AIC | BIC (N) | BIC (top clusters) | BIC (level-specific) | BIC (exact information) |
+|---|---|---|---|---|---|---|
+| Depth 2: ZIP only | 4 | 91.9 | 99.8 | 0.0 | 0.0 | 98.9 |
+| | 8 | 92.1 | 99.9 | 0.0 | 0.0 | 99.7 |
+| | 15 | 90.6 | 99.9 | 0.0 | 0.0 | 99.9 |
+| Depth 3: ZIP + county | 4 | 94.7 | 82.1 | 0.0 | 0.0 | 91.7 |
+| | 8 | 95.3 | 98.6 | 0.0 | 85.5 | 98.6 |
+| | 15 | 94.6 | 100.0 | 0.0 | 89.3 | 99.1 |
+| Depth 4: ZIP + county + region | 4 | 47.2 | 9.0 | 97.8 | 94.5 | 33.7 |
+| | 8 | 80.7 | 39.4 | 99.7 | 90.2 | 66.7 |
+| | 15 | 96.8 | 74.5 | 100.0 | 97.8 | 90.5 |
+| Depth 4, middle missing: ZIP + region | 4 | 83.0 | 74.2 | 91.3 | 97.4 | 80.9 |
+| | 8 | 95.0 | 95.3 | 95.8 | 98.2 | 97.2 |
+| | 15 | 91.9 | 99.9 | 94.5 | 98.3 | 99.7 |
+
+**What it shows**
+
+1. **When the true model is shallow (depth 2 or 3), the leading-order penalties fail completely:** BIC with top-level clusters and the level-specific BIC add levels that do not exist (0% correct with 4 regions). Their high scores for depth 4 come from this same bias toward extra levels, not from skill.
+2. **BIC with total N is reliable for shallow truths but misses a real region level when regions are few:** 9% correct with 4 regions and 39% with 8.
+3. **The exact-information BIC is the only BIC that does well in every scenario with enough regions** (91-100% with 15 regions). It recovers depth 4 far more often than BIC with total N (34% vs 9% with 4 regions; 67% vs 39% with 8) while staying near 99% for shallow truths.
+4. **With only 4 regions, no criterion recovers depth 4 reliably.** This is the few-top-level-units problem the thesis targets.
 
 ## Direction 2: nested random change points
 

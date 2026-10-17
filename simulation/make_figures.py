@@ -79,7 +79,37 @@ def fig_d3(rows, out):
     fig.savefig(out, dpi=200, bbox_inches="tight")
 
 
+def fig_d1_depth(rows, out):
+    truths = list(dict.fromkeys(r["truth"] for r in rows))
+    crits = list(dict.fromkeys(r["criterion"] for r in rows))
+    Rs = sorted({int(r["regions"]) for r in rows})
+    fig, axes = plt.subplots(1, len(truths), figsize=(12.5, 3.4), sharey=True)
+    width = 0.16
+    for ax, t in zip(axes, truths):
+        for i, c in enumerate(crits):
+            vals = [next(float(r["pct_correct"]) for r in rows
+                         if r["truth"] == t and r["criterion"] == c and int(r["regions"]) == R)
+                    for R in Rs]
+            xs = [x + (i - (len(crits) - 1) / 2) * width for x in range(len(Rs))]
+            ax.bar(xs, vals, width=width - 0.02, color=SERIES[i], label=c)
+        head, _, tail = t.partition(": ")
+        ax.set_title(f"{head}\n({tail})", fontsize=9, loc="left")
+        ax.set_xticks(range(len(Rs)), [str(R) for R in Rs])
+        ax.set_xlabel("Number of regions")
+        ax.set_ylim(0, 105)
+        ax.grid(axis="x", visible=False)
+    axes[0].set_ylabel("Correct structure selected (%)")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=5, bbox_to_anchor=(0.5, 1.05))
+    fig.text(0.01, -0.04, "Design: 5 counties per region, 5 ZIP codes per county, 24 months; 8 candidate "
+             "structures; 1,000 data sets per condition. 'Top clusters' and 'level-specific' almost always "
+             "choose a model with extra levels.", fontsize=8, color=MUTED)
+    fig.tight_layout()
+    fig.savefig(out, dpi=200, bbox_inches="tight")
+
+
 if __name__ == "__main__":
     os.makedirs("figures", exist_ok=True)
     fig_d1(read("results/d1_selection.csv"), "figures/d1_selection.png")
     fig_d3(read("results/d3_change_points.csv"), "figures/d3_change_points.png")
+    fig_d1_depth(read("results/d1_depth_4level.csv"), "figures/d1_depth_4level.png")
