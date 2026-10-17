@@ -7,6 +7,8 @@ Run with Python 3 (numpy, scipy, matplotlib):
 ```
 python3 d1_bic_levels.py      # Direction 1, three levels -> results/d1_selection.csv
 python3 d1_depth_4level.py    # Direction 1, depths 2-4   -> results/d1_depth_4level.csv
+python3 d1_your_design.py     # Direction 1, real-data shape -> results/d1_your_design.csv
+python3 plot_your_design.py
 python3 d3_change_points.py   # Direction 2 -> results/d3_change_points.csv
 python3 make_figures.py       # figures/*.png
 ```
@@ -69,6 +71,23 @@ python3 make_figures.py       # figures/*.png
 2. **BIC with total N is reliable for shallow truths but misses a real region level when regions are few:** 9% correct with 4 regions and 39% with 8.
 3. **The exact-information BIC is the only BIC that does well in every scenario with enough regions** (91-100% with 15 regions). It recovers depth 4 far more often than BIC with total N (34% vs 9% with 4 regions; 67% vs 39% with 8) while staying near 99% for shallow truths.
 4. **With only 4 regions, no criterion recovers depth 4 reliably.** This is the few-top-level-units problem the thesis targets.
+
+## Direction 1 with a design shaped like the real data
+
+The ARCOS data have 7 regions, 67 counties and 1,483 ZIP codes. This run approximates them with a balanced design of 7 regions × 10 counties × 21 ZIP codes (70 counties, 1,470 ZIPs) and 60 months, with ZIP variance 0.5 and county variance 0.3. The region variance is 0 (no region effect), 0.05 (small), 0.3 (medium) or 1.0 (large); 500 data sets each. The question is whether each method can tell if the 7 regions really differ.
+
+![Real-data design](figures/d1_your_design.png)
+
+| Truth | AIC | Standard BIC (N) | New BIC (exact information) |
+|---|---|---|---|
+| No region effect | 96.0 | 100.0 | 99.8 |
+| Small region effect | 46.2 | 5.0 | 19.4 |
+| Medium region effect | 96.0 | 77.2 | 91.0 |
+| Large region effect | 100.0 | 98.4 | 99.8 |
+
+BIC with top-level clusters and the leading-order level-specific BIC chose the four-level model in every data set (0% when there is no region effect, 100% otherwise), so they are omitted from the table.
+
+With only 7 regions, a small regional difference is almost never detected by standard BIC (5%). The exact-information BIC detects it more often (19%), and detects a medium difference 91% of the time against 77% for standard BIC, while still almost never adding a region level that does not exist.
 
 ## Direction 2: nested random change points
 

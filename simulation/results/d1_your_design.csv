@@ -1,0 +1,21 @@
+scenario,region_variance,criterion,pct_correct
+No region effect,0.0,AIC,96.0
+No region effect,0.0,BIC (N),100.0
+No region effect,0.0,BIC (top clusters),0.0
+No region effect,0.0,BIC (level-specific),0.0
+No region effect,0.0,BIC (exact information),99.8
+Small region effect,0.05,AIC,46.2
+Small region effect,0.05,BIC (N),5.0
+Small region effect,0.05,BIC (top clusters),100.0
+Small region effect,0.05,BIC (level-specific),100.0
+Small region effect,0.05,BIC (exact information),19.4
+Medium region effect,0.3,AIC,96.0
+Medium region effect,0.3,BIC (N),77.2
+Medium region effect,0.3,BIC (top clusters),100.0
+Medium region effect,0.3,BIC (level-specific),100.0
+Medium region effect,0.3,BIC (exact information),91.0
+Large region effect,1.0,AIC,100.0
+Large region effect,1.0,BIC (N),98.4
+Large region effect,1.0,BIC (top clusters),100.0
+Large region effect,1.0,BIC (level-specific),100.0
+Large region effect,1.0,BIC (exact information),99.8
