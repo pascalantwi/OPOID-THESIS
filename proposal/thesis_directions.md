@@ -5,7 +5,7 @@ author: "Fafa Tchorly — prepared for Dr. Michelle DeDeo"
 date: "19 October 2026"
 ---
 
-Following your guidance, I have narrowed the thesis to two methodological directions. Each starts from a classroom topic, asks a deeper statistical question that a simulation study can answer where the truth is known, and uses the opioid ZIP–month data as the application. Page 3 compares them and states my preference.
+Following your guidance, I have narrowed the thesis to two methodological directions. Each starts from a classroom topic, asks a deeper statistical question that a simulation study can answer where the truth is known, and uses the opioid ZIP–month data as the application. Page 3 compares them and proposes combining them into one connected thesis.
 
 # Direction 1: Information Criteria for Multilevel Models with Three or More Nested Levels
 
@@ -57,27 +57,25 @@ where p~1~, p~2~ and p~3~ are the numbers of month-, ZIP- and county-level fixed
 <w:p><w:r><w:br w:type="page"/></w:r></w:p>
 ```
 
-# Comparison and Preferred Direction
+# Comparison and Preferred Plan
 
 | | Direction 1: Multilevel BIC | Direction 2: Nested random change points |
 |---|---|---|
 | Main contribution | New derivation (theory) | New model and estimation (computation) |
 | Evidence the question is open | Strong: stated as future work by Cho et al. (2024) | Moderate: no nested version found so far |
-| Simulation | Fast (`lme4`); many conditions feasible | Slower (MCMC for each simulated data set) |
-| Main risk | Derivation may not close for unbalanced designs | Convergence and identifiability with short series |
+| Main risk | Derivation may not close for unbalanced designs | Slow MCMC; identifiability with short series |
 | Fallback | Balanced-case theory plus simulation of conjectured penalties | Two-level model, or known-date model with random slopes |
 
-**Preferred direction: Direction 1.** My reasons:
+**Preferred plan: combine both directions around one statistical question.** *In nested panel data, at which levels (ZIP code, county, region) does variation occur, both in the level of opioid supply and in its response to a policy change, and how should those levels be selected?*
 
-1. **Depth on a classroom topic:** it goes from mixed models and information criteria to the derivation behind BIC.
-2. **A documented open question:** the authors of the two-level result explicitly leave higher-level designs for future work.
-3. **Tractable theory:** balanced nested designs have closed-form eigenstructures, and the first three-level step already checks out numerically.
-4. **Simulation answers the question:** with a known true structure, I can measure how often each criterion selects the correct levels, especially with few top-level units.
-5. **Fits the data and could become a paper:** the ZIP–month data are naturally nested, and "BIC for multilevel models with more than two levels" is a focused journal-length question.
+1. **Core: Direction 1.** Derive the BIC penalty for three- and four-level nested models, starting from the balanced case, and evaluate it by simulation against existing criteria. This is the main theoretical contribution.
+2. **Connected extension: Direction 2.** Add the 6 October 2014 rescheduling as a change point in the same multilevel model. First with the known date and a random jump at each level: this is still a linear mixed model, so the new BIC decides at which levels the policy response varies, which requires extending the derivation from random intercepts to random slopes. Then, as time allows, unknown ZIP-specific break dates modelled as nested random effects.
 
-Direction 2 remains a strong alternative and could be future work. **Next steps if you agree:** read the five Direction 1 articles in full, reproduce the two-level result of Cho et al. (2024), extend it to three and four levels and to unbalanced designs, and then revise the thesis outline around this theme.
+**Why together:** both use the same nested data, mixed-model theory and simulation framework; Direction 1 provides the selection tool and Direction 2 the substantive question, so the thesis stays one methodological theme. **Scope control:** Direction 1 is the guaranteed core, and the unknown-date model has a known-date fallback, so the thesis is complete even if the extension is not finished.
 
-*Statements that a question is open are based on my literature search to October 2026 and will be confirmed with a forward-citation search.*
+**Next steps if you agree:** read the key articles in full, reproduce the two-level result of Cho et al. (2024), confirm that the data cover 2014, and then revise the thesis outline around this theme.
+
+*Open-question statements reflect my literature search to October 2026 and will be confirmed by forward-citation search.*
 
 ## References
 
