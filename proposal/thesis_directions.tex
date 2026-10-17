@@ -1,0 +1,146 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,tabularx}
+\usepackage{enumitem}
+\usepackage[authoryear,round]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.0ex plus .3ex}{0.6ex}
+\titlespacing*{\subsection}{0pt}{0.8ex plus .2ex}{0.3ex}
+\setlist{nosep,leftmargin=1.5em}
+\setlength{\parskip}{0.35ex}
+\setlength{\bibsep}{1.5pt}
+\setlength{\parindent}{0pt}
+\newcommand{\para}[1]{\textbf{#1}\ }
+\newcommand{\ind}{\mathbf{1}}
+\DeclareMathOperator{\BIC}{BIC}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Candidate Methodological Directions for the Master's Thesis}\\[0.6ex]
+  {\large Application: Opioid Distribution in ARCOS ZIP--Month Data}\\[1.2ex]
+  Fafa Tchorly\\
+  Department of Mathematics and Statistics, University of North Florida\\[0.3ex]
+  Prepared for Dr.\ Michelle DeDeo \quad\textbullet\quad 19 October 2026
+\end{center}
+
+\vspace{0.5ex}
+Following your guidance, I have narrowed the thesis to two methodological directions. Each starts from a classroom topic, asks a statistical question that simulation can answer where the truth is known, and uses the opioid data as the application. Section~3 proposes combining them.
+
+\para{Common setting.} Let $y_{tjkl}$ denote log morphine milligram equivalents (MME) per 1{,}000 residents in month $t$, ZIP code $j$, county $k$ and region $l$. The baseline four-level model is
+\begin{equation}\label{eq:model}
+  y_{tjkl} = \bm{x}_{tjkl}^{\top}\bm{\beta} + v_l + u_{kl} + w_{jkl} + \varepsilon_{tjkl},
+\end{equation}
+with independent $v_l \sim N(0,\sigma^2_R)$, $u_{kl} \sim N(0,\sigma^2_C)$, $w_{jkl} \sim N(0,\sigma^2_Z)$ and $\varepsilon_{tjkl} \sim N(0,\sigma^2_\varepsilon)$, where $\bm{x}_{tjkl}$ may contain covariates measured at any level (for example income and rurality at the ZIP level).
+
+%======================================================================
+\section{Direction 1: BIC for Multilevel Models with Three or More Levels}
+
+\para{Classroom starting point.} Linear mixed models (ML/REML) and model selection with AIC and BIC.
+
+\para{Statistical question.} The Bayesian information criterion $\BIC = -2\,\ell(\hat{\bm\theta}) + k \log n$ comes from a Laplace approximation to the marginal likelihood,
+\begin{equation}\label{eq:laplace}
+  \log p(\bm{y}\mid M) = \ell(\hat{\bm\theta}) - \tfrac12 \log\det \mathcal{I}(\hat{\bm\theta}) + O_p(1),
+\end{equation}
+where $\mathcal{I}$ is the Fisher information. Replacing $\log\det\mathcal{I}$ by $k\log n$ is justified only if the information about \emph{every} parameter grows at the same rate~$n$. In model~\eqref{eq:model} it does not: information about a parameter grows with the number of units at its own level, and software packages disagree on whether $n$ should be the number of observations or of clusters. \emph{What is the correct penalty for three- and four-level nested models, and does it select the right levels when the top level has few units?}
+
+\para{Related work.} \citet{jones2011} replaced $n$ by an effective sample size for correlated data; \citet{delattre2014} used the number of clusters for random effects and the total sample size for fixed effects; \citet{lorah2019} compared choices of $n$ by simulation for two-level models and conjectured, without derivation, a level-specific penalty for three levels; \citet{cho2024} derived the penalty for level-specific selection in a \emph{two-level} nested model and leave higher-level designs for future study; and \citet{greven2010} showed that marginal AIC favours dropping random effects. I found no derivation for three or more levels.
+
+\para{Preliminary result.} Consider the balanced three-level case (months within $Z$ ZIP codes within each of $C$ counties, $T$ months, $N = CZT$). Each county's covariance matrix is $\bm{V} = \sigma^2_\varepsilon \bm{I}_{ZT} + \sigma^2_Z(\bm{I}_Z \otimes \bm{J}_T) + \sigma^2_C \bm{J}_{ZT}$, with $\bm J$ a matrix of ones, and has only three distinct eigenvalues,
+\begin{equation}\label{eq:eigen}
+  \lambda_1 = \sigma^2_\varepsilon,\qquad
+  \lambda_2 = \sigma^2_\varepsilon + T\sigma^2_Z,\qquad
+  \lambda_3 = \sigma^2_\varepsilon + T\sigma^2_Z + ZT\sigma^2_C,
+\end{equation}
+with total multiplicities $CZ(T-1)$, $C(Z-1)$ and $C$. Working through the information matrix (variance components positive, each covariate varying at a single level, and $C, Z, T \to \infty$) gives
+\begin{equation}\label{eq:bic3}
+  \BIC_3 = -2\,\ell(\hat{\bm\theta}) + (p_1+1)\log N + (p_2+1)\log(CZ) + (p_3+1)\log C,
+\end{equation}
+where $p_1, p_2, p_3$ count the month-, ZIP- and county-level fixed effects (intercept at the county level) and each ``$+1$'' is the variance component of that level. I checked~\eqref{eq:bic3} numerically against the exact Fisher information. It implies that removing a level also changes the penalties on the remaining parameters, which existing criteria ignore; it still has to be reconciled with \citet{cho2024}.
+
+\para{Competing methods.} BIC with total $N$; BIC with number of clusters; Jones's effective sample size; marginal and conditional AIC; boundary-corrected and exact restricted likelihood ratio tests.
+
+\para{Simulation.} Data generated from~\eqref{eq:model} with chosen variance components set to zero, varying the number of top-level units (e.g.\ 4, 8, 15), units per level, intraclass correlations and balance. Outcomes: proportion of correctly selected structures, false-drop and false-keep rates per level, and coverage of fixed-effect intervals after selection.
+
+\para{Opioid application.} Which of the ZIP, county and region levels the data support, the share of variation at each level, and whether conclusions about income and rurality depend on the levels kept; sensitivity to AR(1) errors and to ZIP codes that cross county lines.
+
+\para{Key articles.} \citet{jones2011}; \citet{delattre2014}; \citet{greven2010}; \citet{lorah2019}; \citet{cho2024}.
+
+%======================================================================
+\clearpage
+\section{Direction 2: Multilevel Random Change-Point Models}
+
+\para{Classroom starting point.} Regression with a structural break, $y_t = \bm{x}_t^{\top}\bm\beta + \delta\,\ind\{t \ge \tau\} + \varepsilon_t$, tested with the Chow $F$-statistic $F_T(\tau)$ at a known date $\tau$. When $\tau$ is unknown, \citet{andrews1993} uses
+\begin{equation}\label{eq:supf}
+  \sup F_T = \sup_{\tau \in [\pi T,\,(1-\pi)T]} F_T(\tau),
+\end{equation}
+whose limiting null distribution is non-standard.
+
+\para{Statistical question.} The break date need not be common to all units: ZIP codes may respond to a policy change at different times, and the timing may cluster within counties and regions. I propose to model break dates as nested random effects,
+\begin{align}
+  y_{tjkl} &= \bm{x}_{tjkl}^{\top}\bm\beta + w_{jkl} + \delta_{jkl}\,\ind\{t \ge \tau_{jkl}\} + \varepsilon_{tjkl}, \label{eq:cp}\\
+  \tau_{jkl} &= \tau_0 + a_l + b_{kl} + c_{jkl}, \qquad a_l \sim N(0,\sigma^2_{\tau,R}),\; b_{kl} \sim N(0,\sigma^2_{\tau,C}),\; c_{jkl} \sim N(0,\sigma^2_{\tau,Z}), \label{eq:tau}
+\end{align}
+with $\tau_{jkl}$ discretised to the monthly grid and the jump sizes $\delta_{jkl}$ allowed to vary by level. \emph{Can $\tau_0$ and the timing variances $\sigma^2_{\tau,R}, \sigma^2_{\tau,C}, \sigma^2_{\tau,Z}$ be estimated jointly, and under what conditions on the series length and numbers of units are they identifiable?}
+
+\para{Related work.} \citet{baiperron1998} extended estimation and testing to multiple breaks; \citet{bai2010} estimated a common break date in panel data; \citet{okui2021} allowed breaks to differ across latent groups using grouped fixed effects and adaptive group fused lasso; \citet{lumsdaine2023} allowed group membership itself to change at a break; and \citet{brilleman2017} fitted a Bayesian piecewise linear mixed model with a random change point at the individual level. I have not found a model with change points as random effects at several nested levels; this needs further confirmation.
+
+\para{Theory to develop.} The likelihood of~\eqref{eq:cp}--\eqref{eq:tau} is non-smooth in the discrete break dates, so standard asymptotics do not apply. Estimation would be hierarchical Bayesian, marginalising over the discrete $\tau_{jkl}$ within MCMC, together with conditions for identifiability with short monthly series and the effects of autocorrelation and heteroscedasticity.
+
+\para{Competing methods.} Bai--Perron estimation for each ZIP code separately; the common-break panel estimator of \citet{bai2010}; grouped heterogeneous breaks \citep{okui2021}; a single-level random change point \citep{brilleman2017}.
+
+\para{Simulation.} Break dates generated from~\eqref{eq:tau}, varying the numbers of ZIP codes, counties and regions, series length, jump size, timing variances, and the presence of autocorrelation and heteroscedasticity. Outcomes: bias and RMSE of the break dates, coverage of credible intervals, recovery of the timing variances, and comparison with the competing methods.
+
+\para{Opioid application.} Hydrocodone combination products moved from Schedule~III to Schedule~II on 6 October 2014 \citep{dea2014}. The model estimates when each ZIP code's hydrocodone supply shifted, how much the timing varies across ZIP codes, counties and regions, and whether rurality or income explains the timing. This requires data covering 2014, which I still need to confirm.
+
+\para{Key articles.} \citet{baiperron1998}; \citet{bai2010}; \citet{okui2021}; \citet{lumsdaine2023}; \citet{brilleman2017}.
+
+%======================================================================
+\clearpage
+\section{Comparison and Preferred Plan}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & \textbf{Direction 1: multilevel BIC} & \textbf{Direction 2: nested change points}\\
+\midrule
+Main contribution & New derivation (theory) & New model and estimation (computation)\\
+Evidence the question is open & Strong: stated as future work by \citet{cho2024} & Moderate: no nested version found so far\\
+Simulation cost & Fast (closed-form likelihood) & Slower (MCMC for every simulated data set)\\
+Main risk & Derivation may not close for unbalanced designs & Identifiability with short series\\
+Fallback & Balanced case plus simulation of conjectured penalties & Two-level model, or known break date\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\para{Preferred plan: combine both directions around one statistical question.} \emph{In nested panel data, at which levels (ZIP code, county, region) does variation occur, both in the level of opioid supply and in its response to a policy change, and how should those levels be selected?}
+
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Core (Direction 1).} Derive the BIC penalty for three- and four-level models, starting from~\eqref{eq:bic3}, and evaluate it by simulation against existing criteria.
+  \item \textbf{Connected extension (Direction 2).} With the known date $D_t = \ind\{t \ge \text{October 2014}\}$, extend~\eqref{eq:model} with a nested random jump,
+  \begin{equation}\label{eq:combined}
+    y_{tjkl} = \bm{x}_{tjkl}^{\top}\bm\beta + v_l + u_{kl} + w_{jkl} + \bigl(\delta_0 + \delta_l + \delta_{kl} + \delta_{jkl}\bigr) D_t + \varepsilon_{tjkl}.
+  \end{equation}
+  This is still a linear mixed model, so the new BIC (extended from random intercepts to random slopes) decides at which levels the policy response varies. As time allows, the known date is replaced by the nested random break dates of~\eqref{eq:tau}.
+\end{enumerate}
+
+\para{Why together.} Both directions use the same nested data, mixed-model theory and simulation framework: Direction~1 provides the selection tool and Direction~2 the substantive question, so the thesis remains one methodological theme. \para{Scope control.} Direction~1 is the guaranteed core, and model~\eqref{eq:combined} with a known date is the fallback for the extension, so the thesis is complete even if the unknown-date model is not finished.
+
+\para{Next steps if you agree.} Read the key articles in full, reproduce the two-level result of \citet{cho2024}, confirm that the data cover 2014, and revise the thesis outline around this theme.
+
+{\small\emph{Statements that a question is open reflect my literature search to October 2026 and will be confirmed by a forward-citation search.}}
+
+\bibliographystyle{abbrvnat}
+{\small\bibliography{references}}
+
+\end{document}
