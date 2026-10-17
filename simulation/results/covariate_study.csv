@@ -1,0 +1,21 @@
+scenario,true_structure,method,pct_correct,pct_says_region_matters
+No region effect,ZIP + county,AIC,96.0,4.0
+No region effect,ZIP + county,Standard BIC (N),100.0,0.0
+No region effect,ZIP + county,New BIC (exact information),99.2,0.8
+No region effect,ZIP + county,Likelihood ratio tests,97.2,2.8
+Small region effect,ZIP + county + region,AIC,43.2,43.2
+Small region effect,ZIP + county + region,Standard BIC (N),4.8,4.8
+Small region effect,ZIP + county + region,New BIC (exact information),20.6,20.6
+Small region effect,ZIP + county + region,Likelihood ratio tests,36.4,36.4
+Medium region effect,ZIP + county + region,AIC,94.6,94.6
+Medium region effect,ZIP + county + region,Standard BIC (N),74.0,74.0
+Medium region effect,ZIP + county + region,New BIC (exact information),89.2,89.2
+Medium region effect,ZIP + county + region,Likelihood ratio tests,93.2,93.2
+Region gap due to rurality: covariates IN,ZIP + county,AIC,96.0,4.0
+Region gap due to rurality: covariates IN,ZIP + county,Standard BIC (N),99.8,0.2
+Region gap due to rurality: covariates IN,ZIP + county,New BIC (exact information),99.4,0.6
+Region gap due to rurality: covariates IN,ZIP + county,Likelihood ratio tests,97.2,2.8
+Region gap due to rurality: covariates OUT,ZIP + county,AIC,1.8,98.2
+Region gap due to rurality: covariates OUT,ZIP + county,Standard BIC (N),37.4,62.6
+Region gap due to rurality: covariates OUT,ZIP + county,New BIC (exact information),4.4,95.6
+Region gap due to rurality: covariates OUT,ZIP + county,Likelihood ratio tests,2.6,97.4

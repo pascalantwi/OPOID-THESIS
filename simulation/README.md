@@ -64,7 +64,42 @@ Methods: AIC; standard BIC (k log N, the R default); BIC with the number of top-
 
 **What this means for the thesis.** The new BIC improves on the standard BIC used by most software precisely where the ARCOS data are weakest: few units at the top level. The thesis would derive it properly, explain the trade-off with likelihood-ratio tests and AIC, and apply it to the real data. These are pilot results: intercept-only models, assumed variance sizes, 60 assumed months, and synthetic group sizes with the real totals.
 
-Run it with: `OMP_NUM_THREADS=1 REPS=1000 python3 staged_study.py && python3 plot_staged.py`
+Run it with: `OMP_NUM_THREADS=1 REPS=1000 python3 staged_study.py && python3 plot_staged.py` (covariates: `OMP_NUM_THREADS=1 REPS=500 python3 covariate_study.py && python3 plot_covariates.py`)
+
+## Adding covariates
+
+`covariate_study.py` repeats the four-level study (7 regions, 67 counties, 1,483 ZIP codes, 60 months; 500 data sets per scenario) with covariates in every candidate model. The exact likelihood with fixed effects is checked against a dense-matrix calculation.
+
+**Which ARCOS columns can be covariates**
+
+| Role | Columns | Use |
+|---|---|---|
+| Outcome | `MME_PER_1000` (built from `MME`, `QUANTITY`, `DOSAGE_UNIT`, `CALC_BASE_WT_IN_GM`, `Dosage_Strength`, `MME_Conversion_Factor`, `MME_PER_DOSE`, `DOSAGE_UNIT_PER_1000`) | Not covariates: they make up the outcome, so using them as predictors would be circular |
+| Identifiers | `TRANSACTION_ID`, `ORDER_FORM_NO`, `NDC_NO`, `BUYER_DEA_NO`, `GEO_ID`, `Geographic Area Name`, addresses | Not covariates |
+| Grouping levels | `COUNTY`, `COUNTY_REGION`, `State`, `CITY_NAME` | Random-effect levels, not covariates |
+| ZIP-level covariates | `MEAN_INCOME_$` / `INCOME_GROUP`; `RUCA_NUMBER` / `RUCA_NAME` / `SecondaryRUCA` (rurality); `ZIPCodeType`; `POPULATION` (denominator of the rate) | Used: income and rurality |
+| Month-level covariates | from `TRANSACTION_DATE`: trend, post-October-2014 indicator | Used: both |
+| Possible later | `DRUG_NAME`, `Combined_Labeler_Name`, `Measure` | ZIP-month shares (e.g. % hydrocodone) after aggregation |
+
+**Simulated effects.** Income −0.2 per SD (income clustered by county and region); rural ZIP codes +0.5 (+1.5 in the rurality scenarios), with the share of rural ZIP codes differing across regions; trend −0.5 over the period; post-2014 drop −0.3.
+
+![Covariate study](figures/covariate_study.png)
+
+**Percentage of data sets in which each method concludes that region matters**
+
+| True world | Right answer | AIC | Standard BIC | LR tests | New BIC |
+|---|---|---|---|---|---|
+| No region effect | No | 4.0 | 0.0 | 2.8 | 0.8 |
+| Small region effect | Yes | 43.2 | 4.8 | 36.4 | 20.6 |
+| Medium region effect | Yes | 94.6 | 74.0 | 93.2 | 89.2 |
+| Region gap due to rurality: covariates IN | No (beyond rurality) | 4.0 | 0.2 | 2.8 | 0.6 |
+| Region gap due to rurality: covariates OUT | No (beyond rurality) | 98.2 | 62.6 | 97.4 | 95.6 |
+
+**What it shows**
+
+1. **With covariates in the model, the ranking is the same as before:** the new BIC finds real region effects more often than standard BIC (21% vs 5% small; 89% vs 74% medium) and almost never claims a region effect that does not exist (1%).
+2. **Leaving out an important covariate changes the answer.** When regions differ only because some are more rural, a model without rurality concludes that region matters in 63-98% of data sets. With rurality in the model, every method correctly drops the region level (0-4%). Level selection therefore answers "does region matter *beyond the covariates in the model*?", and the choice of covariates must come before the choice of levels.
+3. Standard BIC is "least wrong" in the left-out case only because it rarely detects region effects at all.
 
 ## Earlier pilot runs
 
